@@ -17,7 +17,7 @@ Usage
 
 Checkout the code, ensure you have node.js and the ws package installed, and run:
 
-    $ sudo apt-get install nodejs npm
+    $ sudo apt-get install nodejs
     $ npm install ws
     $ node playplay_server.js
 
