@@ -40,14 +40,24 @@ var dispatchWheel = function(element, n, c) {
     }
 };
 
+function getElementWithAttr(attr, value) {
+  var all = document.getElementsByTagName("*");
+  for (var i = 0; i < all.length; i++) {
+    if (all[i].getAttribute(attr) === value) {
+      return all[i];
+    }
+  }
+  return null;
+}
+
 var ws = new WebSocket('ws://localhost:6589');
 ws.onmessage = function (event) {
     if (event.data == "playPause") {
-        dispatchClick(document.getElementById("playPause"));
+        dispatchClick(getElementWithAttr("data-id", "play-pause"));
     } else if (event.data == "prevTrack") {
-        dispatchClick(document.getElementById("rew"));
+        dispatchClick(getElementWithAttr("data-id", "rewind"));
     } else if (event.data == "nextTrack") {
-        dispatchClick(document.getElementById("ff"));
+        dispatchClick(getElementWithAttr("data-id", "forward"));
     } else if (event.data == "volUp") {
         dispatchWheel(document.getElementById("vslider"), 120, 10);
     } else if (event.data == "volDown") {
