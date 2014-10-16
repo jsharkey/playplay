@@ -5,13 +5,17 @@
 
   "content_scripts": [
     {
-      "matches": ["https://play.google.com/music/*"],
+      "matches": [
+        "https://play.google.com/music/*",
+        "https://play-music.sandbox.google.com/music/*"
+      ],
       "js": ["playplay_client.js" ]
     }
   ],
 
   "permissions": [
-    "https://play.google.com/"
+    "https://play.google.com/",
+    "https://play-music.sandbox.google.com/"
   ],
 
   "manifest_version": 2

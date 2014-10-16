@@ -22,8 +22,8 @@ var buildMouseEvent = function(type) {
 };
 
 var buildWheelEvent = function(type, n) {
-    var evt = document.createEvent("WheelEvent");
-    evt.initWebKitWheelEvent(0, n, window, 0, 0, 0, 0, false, false, false, false);
+    var eventInit = { deltaX: -0, deltaY: -n };
+    var evt = new WheelEvent("mousewheel", eventInit);
     return evt;
 };
 
@@ -59,9 +59,9 @@ ws.onmessage = function (event) {
     } else if (event.data == "nextTrack") {
         dispatchClick(getElementWithAttr("data-id", "forward"));
     } else if (event.data == "volUp") {
-        dispatchWheel(document.getElementById("vslider"), 120, 10);
+        dispatchWheel(document.getElementById("volume"), 120, 10);
     } else if (event.data == "volDown") {
-        dispatchWheel(document.getElementById("vslider"), -120, 10);
+        dispatchWheel(document.getElementById("volume"), -120, 10);
     } else {
         console.log("unknown event " + event.data);
     }
