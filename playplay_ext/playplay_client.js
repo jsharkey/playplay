@@ -59,9 +59,9 @@ ws.onmessage = function (event) {
     } else if (event.data == "nextTrack") {
         dispatchClick(getElementWithAttr("data-id", "forward"));
     } else if (event.data == "volUp") {
-        dispatchWheel(document.getElementById("volume"), 120, 10);
+        dispatchWheel(document.getElementById("volume"), 120, 2);
     } else if (event.data == "volDown") {
-        dispatchWheel(document.getElementById("volume"), -120, 10);
+        dispatchWheel(document.getElementById("volume"), -120, 2);
     } else {
         console.log("unknown event " + event.data);
     }
