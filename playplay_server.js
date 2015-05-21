@@ -17,11 +17,20 @@
 
 var cmds = ['playPause', 'nextTrack', 'prevTrack', 'volUp', 'volDown'];
 var clients = [];
+var fs = require('fs');
+var http = require('https');
 
+// Self-signed SSL certificates for an https server:
+// http://docs.nodejitsu.com/articles/HTTP/servers/how-to-create-a-HTTPS-server
+// NOTE: Obviously you'll need to generate your own.
+var options = {
+    key: fs.readFileSync('./ssl-certificates/key.pem'),
+    cert: fs.readFileSync('./ssl-certificates/cert.pem')
+};
 
-// server listening for commands from host
-var http = require('http');
-var server = http.createServer(function (req, res) {
+// https server listening for commands from host (e.g.,
+// https://localhost:8076/playPause )
+var server = http.createServer(options, function (req, res) {
     for (var i = 0; i < cmds.length; i++) {
         var cmd = cmds[i];
         if (req.url == '/' + cmd) {
@@ -40,13 +49,21 @@ var server = http.createServer(function (req, res) {
     }
 
     res.writeHead(404, {'Content-Type': 'text/plain'});
-    res.end('nope');
+    res.end('Server listening for commands.');
 }).listen(8076, 'localhost'); // PL in ascii
 
 
-// websocket that music app connects to
+// websocket server that playplay_client extension connects to on port 6589
+// (6589 is AY in ascii).
+var processRequest = function( req, res ) {
+    res.writeHead(200);
+    res.end("All glory to WebSockets!\n");
+};
+
+var server_listen = http.createServer(options, processRequest).listen(6589);
+
 var WebSocketServer = require('ws').Server;
-var wss = new WebSocketServer({host: 'localhost', port: 6589}); // AY in ascii
+var wss = new WebSocketServer({server: server_listen});
 wss.on('connection', function(ws) {
     clients.push(ws);
     console.log('client connection; now ' + clients.length);

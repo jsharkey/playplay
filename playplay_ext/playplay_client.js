@@ -50,8 +50,11 @@ function getElementWithAttr(attr, value) {
   return null;
 }
 
-var ws = new WebSocket('ws://localhost:6589');
+// Use secure websockets.
+var ws = new WebSocket('wss://localhost:6589');
+
 ws.onmessage = function (event) {
+    console.log("got event " + event.data);
     if (event.data == "playPause") {
         dispatchClick(getElementWithAttr("data-id", "play-pause"));
     } else if (event.data == "prevTrack") {

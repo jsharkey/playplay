@@ -28,3 +28,22 @@ You can verify everything is working by running the scripts manually from the co
     $ ./cmd_playPause.sh
 
 Finally, wire up the shortcuts scripts to your desktop environment, usually under keyboard settings.  For example, in Ubuntu I found them under Applications > System Tools > Preferences > Cinnamon Settings > Keyboard > Keyboard shortcuts > Custom Shortcuts.
+
+
+HTTPS usage notes
+-----------------
+
+Google Play music now uses https. This requires you to generate self-signed ssl
+certificates as described here:
+http://docs.nodejitsu.com/articles/HTTP/servers/how-to-create-a-HTTPS-server
+
+You can place key.pem and cert.pen directly in ssl-certificates/.
+
+Notes
+-----
+
+To get the chrome console:
+    Ctrl + Shift + J
+
+To re-package the extension:
+    ./make_crx.sh playplay_ext/ ~/.ssh/id_rsa
